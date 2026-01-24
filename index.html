@@ -13,15 +13,20 @@
   <meta property="og:image" content="logo.jpeg">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/jpeg" href="logo.jpeg">
+  <meta name="theme-color" content="#C9A227">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="logo.jpeg" as="image">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
   
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BeautySalon",
     "name": "VogueVerse Makeup Studio",
-    "telephone": "+91-7380433001",
+    "telephone": "+91-7880433001",
     "email": "Vogueversestudio@gmail.com",
     "address": {
       "@type": "PostalAddress",
@@ -64,7 +69,7 @@
     a {
       text-decoration: none;
       color: inherit;
-      transition: all 0.3s ease;
+      transition: color 0.3s ease, transform 0.3s ease;
     }
 
     img {
@@ -103,7 +108,7 @@
       right: 0;
       z-index: 1000;
       padding: 12px 0;
-      transition: all 0.4s ease;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
     }
 
     header.scrolled {
@@ -199,7 +204,8 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80') center/cover;
+      background: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=75') center/cover;
+      will-change: transform;
     }
 
     .hero-overlay {
@@ -986,6 +992,431 @@
       transform: scale(1.1);
     }
 
+    /* AI Chatbot Widget */
+    .chatbot-container {
+      position: fixed;
+      bottom: 95px;
+      right: 25px;
+      z-index: 999;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .chatbot-toggle {
+      width: 55px;
+      height: 55px;
+      background: linear-gradient(135deg, var(--gold), #B8922A);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 30px rgba(201, 162, 39, 0.5);
+      transition: all 0.3s ease;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      overflow: visible;
+      padding: 0;
+      position: relative;
+    }
+
+    .chatbot-toggle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .chatbot-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 40px rgba(201, 162, 39, 0.6);
+    }
+
+    .chatbot-toggle .ai-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 6px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(238, 90, 90, 0.5);
+      border: 2px solid var(--black);
+    }
+
+    .chatbot-window {
+      position: absolute;
+      bottom: 75px;
+      right: 0;
+      width: 340px;
+      max-height: 450px;
+      background: var(--black);
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(201, 162, 39, 0.3);
+    }
+
+    .chatbot-window.active {
+      display: flex;
+    }
+
+    .chatbot-header {
+      background: linear-gradient(135deg, var(--gold), #B8922A);
+      color: var(--black);
+      padding: 12px 15px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chatbot-header-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chatbot-header-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .chatbot-header-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chatbot-header-text span {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .chatbot-header-text small {
+      font-size: 10px;
+      opacity: 0.8;
+      font-weight: 400;
+    }
+
+    .chatbot-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--black);
+    }
+
+    .chatbot-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 280px;
+      background: rgba(20, 20, 20, 0.95);
+    }
+
+    .chat-message {
+      padding: 10px 14px;
+      border-radius: 12px;
+      max-width: 85%;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .chat-message.bot {
+      background: rgba(201, 162, 39, 0.15);
+      color: var(--white);
+      align-self: flex-start;
+      border: 1px solid rgba(201, 162, 39, 0.2);
+    }
+
+    .chat-message.user {
+      background: var(--gold);
+      color: var(--black);
+      align-self: flex-end;
+    }
+
+    .chatbot-input {
+      display: flex;
+      padding: 12px;
+      background: rgba(30, 30, 30, 0.95);
+      border-top: 1px solid rgba(201, 162, 39, 0.2);
+    }
+
+    .chatbot-input input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--white);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .chatbot-input input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .chatbot-input button {
+      background: var(--gold);
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      margin-left: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .chatbot-input button:hover {
+      transform: scale(1.1);
+    }
+
+    .quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 10px 15px;
+      background: rgba(25, 25, 25, 0.95);
+    }
+
+    .quick-reply {
+      padding: 6px 12px;
+      background: rgba(201, 162, 39, 0.1);
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      border-radius: 15px;
+      font-size: 11px;
+      color: var(--gold);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quick-reply:hover {
+      background: rgba(201, 162, 39, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .whatsapp-fab {
+        width: 52px;
+        height: 52px;
+        font-size: 22px;
+        bottom: 20px;
+        right: 20px;
+      }
+      .chatbot-container {
+        bottom: 85px;
+        right: 20px;
+      }
+      .chatbot-window {
+        width: 290px;
+        right: 0;
+      }
+      .chatbot-toggle {
+        width: 50px;
+        height: 50px;
+      }
+      .chatbot-toggle .ai-badge {
+        font-size: 8px;
+        padding: 2px 5px;
+      }
+    }
+
+    /* Welcome Popup */
+    .welcome-popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .welcome-popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .welcome-popup {
+      background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+      border-radius: 20px;
+      max-width: 420px;
+      width: 100%;
+      overflow: hidden;
+      transform: scale(0.8);
+      transition: all 0.4s ease;
+      border: 1px solid rgba(201, 162, 39, 0.3);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .welcome-popup-overlay.active .welcome-popup {
+      transform: scale(1);
+    }
+
+    .popup-header {
+      background: linear-gradient(135deg, var(--gold), #B8922A);
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .popup-header img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      margin-bottom: 10px;
+    }
+
+    .popup-header h3 {
+      color: var(--black);
+      font-size: 20px;
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .popup-header p {
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 12px;
+      margin: 5px 0 0;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--black);
+      transition: all 0.3s ease;
+    }
+
+    .popup-close:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .popup-content {
+      padding: 25px;
+    }
+
+    .popup-offer {
+      background: rgba(201, 162, 39, 0.1);
+      border: 1px dashed var(--gold);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .popup-offer-badge {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .popup-offer h4 {
+      color: var(--gold);
+      font-size: 24px;
+      margin: 0 0 5px;
+    }
+
+    .popup-offer p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .popup-features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .popup-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      font-size: 13px;
+    }
+
+    .popup-feature span {
+      font-size: 18px;
+    }
+
+    .popup-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .popup-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .popup-btn-primary {
+      background: linear-gradient(135deg, var(--gold), #B8922A);
+      color: var(--black);
+      border: none;
+    }
+
+    .popup-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(201, 162, 39, 0.4);
+    }
+
+    .popup-btn-secondary {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+    }
+
+    .popup-btn-secondary:hover {
+      background: rgba(201, 162, 39, 0.1);
+    }
+
+    @media (max-width: 480px) {
+      .welcome-popup {
+        max-width: 340px;
+      }
+      .popup-buttons {
+        flex-direction: column;
+      }
+    }
+
     /* Mobile Menu Active State - Premium Design */
     .nav-links.active {
       display: flex !important;
@@ -1186,7 +1617,7 @@
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <img src="logo.jpeg" alt="VogueVerse Makeup Studio" class="hero-logo">
+      <img src="logo.jpeg" alt="VogueVerse Makeup Studio" class="hero-logo" width="130" height="130">
       <div class="hero-badge">
         <span>🎨 Welcome to VogueVerse Makeup Studio💄</span>
       </div>
@@ -1203,7 +1634,7 @@
     <div class="container">
       <div class="about-grid">
         <div class="about-image">
-          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80" alt="Professional Makeup Artist" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=75" alt="Professional Makeup Artist" loading="lazy" width="600" height="400" decoding="async">
           <img src="logo.jpeg" alt="VogueVerse" class="about-logo">
         </div>
         <div class="about-content">
@@ -1276,42 +1707,42 @@
       </div>
       <div class="portfolio-grid">
         <div class="portfolio-item">
-          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=600&q=80" alt="Bridal" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=400&q=70" alt="Bridal" loading="lazy" decoding="async">
           <div class="portfolio-overlay">
             <h4>Bridal Glam</h4>
             <span>Wedding</span>
           </div>
         </div>
         <div class="portfolio-item">
-          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" alt="Party" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=70" alt="Party" loading="lazy" decoding="async">
           <div class="portfolio-overlay">
             <h4>Party Look</h4>
             <span>Cocktail</span>
           </div>
         </div>
         <div class="portfolio-item">
-          <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&w=600&q=80" alt="Editorial" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&w=400&q=70" alt="Editorial" loading="lazy" decoding="async">
           <div class="portfolio-overlay">
             <h4>Editorial</h4>
             <span>Magazine</span>
           </div>
         </div>
         <div class="portfolio-item">
-          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=600&q=80" alt="Engagement" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=400&q=70" alt="Engagement" loading="lazy" decoding="async">
           <div class="portfolio-overlay">
             <h4>Engagement</h4>
             <span>Ring Ceremony</span>
           </div>
         </div>
         <div class="portfolio-item">
-          <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80" alt="Sangeet" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=400&q=70" alt="Sangeet" loading="lazy" decoding="async">
           <div class="portfolio-overlay">
             <h4>Sangeet Night</h4>
             <span>Celebration</span>
           </div>
         </div>
         <div class="portfolio-item">
-          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80" alt="Reception" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=400&q=70" alt="Reception" loading="lazy" decoding="async">
           <div class="portfolio-overlay">
             <h4>Reception</h4>
             <span>Grand Finale</span>
@@ -1377,26 +1808,47 @@
         <p class="section-desc">Tutorials, transformations & behind-the-scenes!</p>
       </div>
       <div class="youtube-grid">
-        <a href="https://youtube.com/@vogueversemakeupstudio" target="_blank" class="youtube-card">
+        <a href="https://youtube.com/shorts/NHPvRlJOwZA" target="_blank" class="youtube-card">
           <div class="youtube-thumb">
-            <img src="https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&w=600&q=80" alt="Tutorial" loading="lazy">
+            <img src="https://img.youtube.com/vi/NHPvRlJOwZA/maxresdefault.jpg" alt="Engagement Look" loading="lazy">
             <div class="play-btn">▶</div>
           </div>
-          <h4>Bridal Makeup Tutorial – Step by Step</h4>
+          <h4>Engagement Look ✨</h4>
         </a>
-        <a href="https://youtube.com/@vogueversemakeupstudio" target="_blank" class="youtube-card">
+        <a href="https://youtube.com/shorts/Dmdx53iV5qU" target="_blank" class="youtube-card">
           <div class="youtube-thumb">
-          <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80" alt="Party" loading="lazy">
+            <img src="https://img.youtube.com/vi/Dmdx53iV5qU/maxresdefault.jpg" alt="Bridal Look" loading="lazy">
             <div class="play-btn">▶</div>
           </div>
-          <h4>Party Glam for Indian Skin Tones</h4>
+          <h4>Bridal Makeup 👰</h4>
         </a>
-        <a href="https://youtube.com/@vogueversemakeupstudio" target="_blank" class="youtube-card">
+        <a href="https://youtube.com/shorts/4YnRpd7tFsg" target="_blank" class="youtube-card">
           <div class="youtube-thumb">
-            <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?auto=format&fit=crop&w=600&q=80" alt="Skincare" loading="lazy">
+            <img src="https://img.youtube.com/vi/4YnRpd7tFsg/maxresdefault.jpg" alt="Haldi Look" loading="lazy">
             <div class="play-btn">▶</div>
           </div>
-          <h4>Pre-Wedding Skincare Routine</h4>
+          <h4>Haldi Look 💛</h4>
+        </a>
+        <a href="https://youtube.com/shorts/d2JDdHDmHJo" target="_blank" class="youtube-card">
+          <div class="youtube-thumb">
+            <img src="https://img.youtube.com/vi/d2JDdHDmHJo/maxresdefault.jpg" alt="Muslim Bridal Look" loading="lazy">
+            <div class="play-btn">▶</div>
+          </div>
+          <h4>Muslim Bridal Look 🌙</h4>
+        </a>
+        <a href="https://youtube.com/shorts/DBPVPXfE1CA" target="_blank" class="youtube-card">
+          <div class="youtube-thumb">
+            <img src="https://img.youtube.com/vi/DBPVPXfE1CA/maxresdefault.jpg" alt="Engagement Look" loading="lazy">
+            <div class="play-btn">▶</div>
+          </div>
+          <h4>Engagement Look 💍</h4>
+        </a>
+        <a href="https://youtube.com/shorts/EfbXEZeQZ_Q" target="_blank" class="youtube-card">
+          <div class="youtube-thumb">
+            <img src="https://img.youtube.com/vi/EfbXEZeQZ_Q/maxresdefault.jpg" alt="Party Look" loading="lazy">
+            <div class="play-btn">▶</div>
+          </div>
+          <h4>Party Look 🎉</h4>
         </a>
       </div>
       <div class="youtube-cta">
@@ -1463,34 +1915,44 @@
           <img src="logo.jpeg" alt="VogueVerse" class="contact-logo">
           <h3>Let's Connect</h3>
           <div class="info-item">
-            <div class="info-icon">📍</div>
+            <div class="info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
             <div class="info-text">
               <label>Locations</label>
               <p>Noida & Gorakhpur (U.P.)<br><small style="opacity: 0.6;">Available across India</small></p>
             </div>
           </div>
           <div class="info-item">
-            <div class="info-icon">📞</div>
+            <div class="info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
             <div class="info-text">
               <label>Phone / WhatsApp</label>
-              <a href="tel:+917380433001">+91-7380433001</a>
+              <a href="tel:+917880433001">+91-7880433001</a>
             </div>
           </div>
           <div class="info-item">
-            <div class="info-icon">📧</div>
+            <div class="info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
             <div class="info-text">
               <label>Email</label>
               <a href="mailto:Vogueversestudio@gmail.com">Vogueversestudio@gmail.com</a>
             </div>
           </div>
           <div class="info-item">
-            <div class="info-icon">📲</div>
+            <div class="info-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </div>
             <div class="info-text">
               <label>Instagram</label>
               <a href="https://instagram.com/vogueversemakeupstudio" target="_blank">@vogueversemakeupstudio</a>
             </div>
           </div>
-          <a href="https://wa.me/917380433001?text=Hi%20VogueVerse,%20I%20would%20like%20to%20book%20a%20makeup%20appointment." target="_blank" class="whatsapp-btn">💬 Chat on WhatsApp</a>
+          <a href="https://api.whatsapp.com/send?phone=917880433001&text=Hi%20VogueVerse,%20I%20would%20like%20to%20book%20a%20makeup%20appointment." target="_blank" rel="noopener noreferrer" class="whatsapp-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 8px;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            Chat on WhatsApp</a>
         </div>
       </div>
     </div>
@@ -1525,9 +1987,18 @@
         <div>
           <h4>Follow Us</h4>
           <div class="social-links">
-            <a href="https://instagram.com/vogueversemakeupstudio" target="_blank">📷</a>
-            <a href="https://youtube.com/@vogueversemakeupstudio" target="_blank">▶️</a>
-            <a href="https://facebook.com/VogueVerseStudio" target="_blank">📘</a>
+            <a href="https://instagram.com/vogueversemakeupstudio" target="_blank" title="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="https://youtube.com/@vogueversemakeupstudio" target="_blank" title="YouTube">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+            </a>
+            <a href="https://facebook.com/VogueVerseStudio" target="_blank" title="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=917880433001&text=Hi%20VogueVerse!" target="_blank" title="WhatsApp">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            </a>
           </div>
         </div>
       </div>
@@ -1538,12 +2009,106 @@
     </div>
   </footer>
 
-  <a href="https://wa.me/917380433001?text=Hi%20VogueVerse,%20I%20would%20like%20to%20book." target="_blank" class="whatsapp-fab">💬</a>
+  <a href="https://api.whatsapp.com/send?phone=917880433001&text=Hi%20VogueVerse,%20I%20would%20like%20to%20book." target="_blank" rel="noopener noreferrer" class="whatsapp-fab">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+  </a>
+
+  <!-- Welcome Popup -->
+  <div class="welcome-popup-overlay" id="welcomePopup">
+    <div class="welcome-popup">
+      <div class="popup-header">
+        <button class="popup-close" id="popupClose">×</button>
+        <img src="logo.jpeg" alt="VogueVerse">
+        <h3>Welcome to VogueVerse Makeup Studio! ✨</h3>
+        <p>Premium Bridal & Party Makeup Studio</p>
+      </div>
+      <div class="popup-content">
+        <div class="popup-offer">
+          <span class="popup-offer-badge">🔥 LIMITED TIME OFFER</span>
+          <h4>20% OFF</h4>
+          <p>On all weekday bookings!</p>
+        </div>
+        <div class="popup-features">
+          <div class="popup-feature"><span>👰</span> Bridal Makeup from ₹15,000</div>
+          <div class="popup-feature"><span>🎉</span> Party Glam from ₹2,999</div>
+          <div class="popup-feature"><span>✨</span> FREE Trial with Bridal Package</div>
+          <div class="popup-feature"><span>📍</span> Noida | Gorakhpur | Pan India</div>
+        </div>
+        <div class="popup-buttons">
+          <a href="#contact" class="popup-btn popup-btn-primary" id="popupBook">📅 Book Now</a>
+          <a href="https://api.whatsapp.com/send?phone=917880433001&text=Hi%20VogueVerse,%20I%20saw%20your%20offer!" target="_blank" class="popup-btn popup-btn-secondary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 5px;"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Chatbot Widget -->
+  <div class="chatbot-container">
+    <button class="chatbot-toggle" id="chatbotToggle">
+      <img src="logo.jpeg" alt="VogueVerse" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">
+      <span class="ai-badge">AI</span>
+    </button>
+    <div class="chatbot-window" id="chatbotWindow">
+      <div class="chatbot-header">
+        <div class="chatbot-header-info">
+          <img src="logo.jpeg" alt="VogueVerse" class="chatbot-header-logo">
+          <div class="chatbot-header-text">
+            <span>VogueVerse</span>
+            <small>🟢 Online | Ask me anything</small>
+          </div>
+        </div>
+        <button class="chatbot-close" id="chatbotClose">×</button>
+      </div>
+      <div class="chatbot-messages" id="chatMessages">
+        <div class="chat-message bot">Hi! 👋 I'm VogueVerse Assistant. Ask me about services, prices, offers, or booking!</div>
+      </div>
+      <div class="quick-replies">
+        <span class="quick-reply" data-query="offers">🎁 Offers</span>
+        <span class="quick-reply" data-query="prices">💰 Prices</span>
+        <span class="quick-reply" data-query="bridal">👰 Bridal</span>
+        <span class="quick-reply" data-query="book">📅 Book</span>
+      </div>
+      <div class="chatbot-input">
+        <input type="text" id="chatInput" placeholder="Type your question...">
+        <button id="chatSend">➤</button>
+      </div>
+    </div>
+  </div>
 
   <script>
   document.getElementById('year').textContent = new Date().getFullYear();
   window.addEventListener('scroll', function() {
     document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // ============ WELCOME POPUP ============
+  const welcomePopup = document.getElementById('welcomePopup');
+  const popupClose = document.getElementById('popupClose');
+  const popupBook = document.getElementById('popupBook');
+
+  // Show popup after 1.5 seconds on every visit
+  setTimeout(() => {
+    welcomePopup.classList.add('active');
+  }, 1500);
+
+  // Close popup functions
+  function closePopup() {
+    welcomePopup.classList.remove('active');
+  }
+
+  popupClose.addEventListener('click', closePopup);
+  popupBook.addEventListener('click', closePopup);
+  
+  // Close on overlay click
+  welcomePopup.addEventListener('click', (e) => {
+    if (e.target === welcomePopup) closePopup();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePopup();
   });
 
   // Google Sheets Integration
@@ -1576,7 +2141,7 @@
         body: JSON.stringify(formData)
       });
       
-      status.innerHTML = '✅ Booking submitted! <a href="https://wa.me/917380433001?text=Hi%20VogueVerse,%20I%20just%20submitted%20a%20booking%20for%20' + encodeURIComponent(formData.service) + '" target="_blank" style="color:var(--gold);">Chat on WhatsApp</a>';
+      status.innerHTML = '✅ Booking submitted! <a href="https://api.whatsapp.com/send?phone=917880433001&text=Hi%20VogueVerse,%20I%20just%20submitted%20a%20booking%20for%20' + encodeURIComponent(formData.service) + '" target="_blank" rel="noopener noreferrer" style="color:var(--gold);">Chat on WhatsApp</a>';
       this.reset();
     } catch (err) {
       status.textContent = '❌ Error submitting. Please try WhatsApp.';
@@ -1600,6 +2165,170 @@ navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     mobileToggle.classList.remove('active');
     navLinks.classList.remove('active');
+  });
+});
+
+// ============ AI CHATBOT ============
+const chatbotToggle = document.getElementById('chatbotToggle');
+const chatbotWindow = document.getElementById('chatbotWindow');
+const chatbotClose = document.getElementById('chatbotClose');
+const chatMessages = document.getElementById('chatMessages');
+const chatInput = document.getElementById('chatInput');
+const chatSend = document.getElementById('chatSend');
+
+// Knowledge Base - UPDATE YOUR OFFERS & INFO HERE
+const knowledgeBase = {
+  offers: {
+    keywords: ['offer', 'discount', 'deal', 'sale', 'promotion', 'special', 'coupon'],
+    response: "🎉 *Current Offers:*\n\n✨ 20% OFF on weekday bookings!\n✨ FREE trial session with bridal package\n✨ Refer a friend & get ₹500 off\n✨ 10% OFF for early bird bookings (3+ months advance)\n\n📞 Call +91-7880433001 to avail!"
+  },
+  prices: {
+    keywords: ['price', 'cost', 'rate', 'charge', 'fee', 'how much', 'pricing', 'kitna', 'kitne'],
+    response: "💰 *Our Pricing:*\n\n• Party Makeup: ₹2,999 onwards\n• Engagement: ₹4,999 onwards\n• Pre-wedding Shoot: ₹5,999 onwards\n• Bridal (HD): ₹15,000 onwards\n• Bridal (Airbrush): ₹20,000 onwards\n• Saree Draping: ₹999\n• Hair Styling: ₹1,499 onwards\n\n📞 Contact for custom packages!"
+  },
+  bridal: {
+    keywords: ['bridal', 'bride', 'wedding', 'shaadi', 'dulhan', 'marriage'],
+    response: "👰 *Bridal Packages Include:*\n\n✨ HD/Airbrush Makeup\n✨ Hairstyling & Draping\n✨ FREE Trial Session\n✨ Touch-up Kit\n✨ Family Makeup Discounts\n✨ Jewellery Setting\n\n� Starting ₹15,000\n�� Available across India!\n📅 Book 2-3 months in advance."
+  },
+  party: {
+    keywords: ['party', 'cocktail', 'reception', 'sangeet', 'mehendi', 'event', 'function'],
+    response: "🎊 *Party & Event Makeup:*\n\n• Cocktail Glam\n• Sangeet Special\n• Mehendi Look\n• Reception Look\n• Corporate Events\n• Birthday Parties\n\n💄 Starting ₹2,999\n⏰ 1-2 hour session\n\nBook your glam look today!"
+  },
+  services: {
+    keywords: ['service', 'what do you', 'offer what', 'provide', 'do you do', 'kya karte'],
+    response: "💄 *Our Services:*\n\n• Bridal Makeup (HD & Airbrush)\n• Party & Event Makeup\n• Engagement & Pre-wedding\n• Hair Styling & Extensions\n• Saree & Dupatta Draping\n• Makeup Classes & Workshops\n• Celebrity & Editorial Makeup\n\n📍 Noida | Gorakhpur | Pan India"
+  },
+  booking: {
+    keywords: ['book', 'appointment', 'schedule', 'reserve', 'available', 'slot', 'date'],
+    response: "📅 *How to Book:*\n\n1️⃣ Fill form on our website\n2️⃣ WhatsApp: +91-7880433001\n3️⃣ Call directly\n\n⏰ We respond within 2 hours!\n💡 Book bridal 2-3 months early.\n💳 ₹5,000 advance to confirm date.\n\nScroll down to fill booking form! 👇"
+  },
+  location: {
+    keywords: ['location', 'where', 'address', 'area', 'city', 'based', 'kahan', 'studio'],
+    response: "📍 *Our Locations:*\n\n🏠 Studio 1: Noida, Uttar Pradesh\n🏠 Studio 2: Gorakhpur, Uttar Pradesh\n\n✈️ We travel! Available for:\n• Delhi NCR (No extra charge)\n• Pan India (Travel charges apply)\n• Destination weddings\n\n📞 +91-7880433001"
+  },
+  contact: {
+    keywords: ['contact', 'phone', 'number', 'call', 'email', 'reach', 'whatsapp'],
+    response: "📞 *Contact Us:*\n\n📱 Phone/WhatsApp: +91-7880433001\n📧 Email: Vogueversestudio@gmail.com\n📸 Instagram: @vogueversemakeupstudio\n🎥 YouTube: VogueVerse Makeup Studio\n\n⏰ Working Hours: 9 AM - 8 PM\n💬 We reply within 2 hours!"
+  },
+  hello: {
+    keywords: ['hi', 'hello', 'hey', 'hii', 'hola', 'namaste', 'good morning', 'good evening'],
+    response: "Hello! 👋 Welcome to VogueVerse Makeup Studio!\n\nI'm your AI assistant. I can help you with:\n• 💄 Services & Pricing\n• 🎁 Current Offers\n• 👰 Bridal Packages\n• 📅 Booking Info\n• 📍 Location & Contact\n\nWhat would you like to know?"
+  },
+  timing: {
+    keywords: ['time', 'timing', 'hours', 'open', 'close', 'working', 'available when'],
+    response: "⏰ *Working Hours:*\n\n🕘 Monday - Saturday: 9 AM - 8 PM\n🕐 Sunday: 10 AM - 6 PM\n\n💡 For bridal, we start early (5-6 AM) as needed!\n📅 Appointment required for studio visits.\n\n📞 +91-7880433001"
+  },
+  payment: {
+    keywords: ['payment', 'pay', 'cash', 'upi', 'card', 'gpay', 'paytm', 'advance', 'token'],
+    response: "💳 *Payment Options:*\n\n• Cash\n• UPI (GPay, PhonePe, Paytm)\n• Bank Transfer\n• Credit/Debit Card\n\n💰 *Booking Policy:*\n• ₹5,000 advance to confirm\n• Balance on the day\n• Full refund if cancelled 7+ days before"
+  },
+  trial: {
+    keywords: ['trial', 'test', 'demo', 'try', 'sample', 'preview'],
+    response: "💄 *Trial Sessions:*\n\n✅ FREE with bridal package!\n✅ Standalone trial: ₹2,000 (adjustable)\n\n📅 Trial is usually 2-3 weeks before wedding\n⏰ Duration: 2-3 hours\n📸 We click photos for reference\n\nBook your trial now!"
+  },
+  products: {
+    keywords: ['product', 'brand', 'makeup kit', 'quality', 'use what', 'which brand', 'cosmetic'],
+    response: "💄 *Premium Products We Use:*\n\n• MAC\n• Huda Beauty\n• Charlotte Tilbury\n• Bobbi Brown\n• NARS\n• Kryolan (HD & Airbrush)\n\n✨ All products are 100% genuine\n🧴 Skin-friendly & long-lasting\n💪 Sweat-proof formulas for Indian weather"
+  },
+  hair: {
+    keywords: ['hair', 'hairstyle', 'hairdo', 'bun', 'curls', 'straightening', 'extension'],
+    response: "💇‍♀️ *Hair Services:*\n\n• Bridal Hairstyles\n• Party Updos & Buns\n• Curls & Waves\n• Straightening\n• Hair Extensions\n• Flower & Jewellery Setting\n\n💰 Starting ₹1,499\n✨ Included in bridal packages!"
+  },
+  saree: {
+    keywords: ['saree', 'sari', 'draping', 'drape', 'dupatta', 'lehenga'],
+    response: "👗 *Draping Services:*\n\n• Saree Draping (10+ styles)\n• Dupatta Setting\n• Lehenga Adjustments\n• Pre-pleated Saree\n\n💰 Saree Draping: ₹999\n✨ Included in bridal packages!\n\n📸 We ensure perfect pleats for photos!"
+  },
+  airbrush: {
+    keywords: ['airbrush', 'air brush', 'hd makeup', 'hd', 'long lasting', 'waterproof'],
+    response: "✨ *HD & Airbrush Makeup:*\n\n🎨 *Airbrush:*\n• Flawless finish\n• Lightweight feel\n• 12+ hours lasting\n• Waterproof & sweat-proof\n• Perfect for photos/videos\n\n💰 Airbrush Bridal: ₹20,000 onwards\n💰 HD Bridal: ₹15,000 onwards\n\nBest for summer weddings!"
+  },
+  travel: {
+    keywords: ['travel', 'outstation', 'destination', 'outside', 'other city', 'come to'],
+    response: "✈️ *Travel & Outstation:*\n\n📍 Delhi NCR: No extra charge\n📍 UP/Bihar/MP: ₹2,000-5,000\n📍 Other states: Travel + Stay\n📍 Destination weddings: Custom quote\n\n✅ We've worked across India!\n✅ Team available for big functions\n\n📞 Call for custom quote"
+  },
+  team: {
+    keywords: ['team', 'artist', 'staff', 'who', 'experience', 'trained', 'certified'],
+    response: "👩‍🎨 *Our Team:*\n\n✨ 5+ certified makeup artists\n🎓 Trained from top academies\n📸 8+ years experience\n👰 500+ brides done\n⭐ 4.9 rating on Google\n\n💄 Led by professional artists with celebrity experience!\n\n📸 Check our Instagram for work!"
+  },
+  cancel: {
+    keywords: ['cancel', 'refund', 'postpone', 'reschedule', 'change date'],
+    response: "📋 *Cancellation Policy:*\n\n✅ 7+ days before: Full refund\n⚠️ 3-7 days before: 50% refund\n❌ Less than 3 days: No refund\n\n🔄 *Reschedule:*\nFree date change if informed 7+ days before!\n\n📞 Contact us for any changes"
+  },
+  instagram: {
+    keywords: ['instagram', 'insta', 'social', 'portfolio', 'work', 'photos', 'gallery'],
+    response: "📸 *Follow Us:*\n\n• Instagram: @vogueversemakeupstudio\n• YouTube: VogueVerse Makeup Studio\n• Facebook: VogueVerse Makeup Studio\n\n✨ See 500+ transformations!\n🎥 Tutorials & behind-the-scenes\n💄 Latest trends & tips\n\nFollow for daily inspiration! 💕"
+  },
+  classes: {
+    keywords: ['class', 'course', 'learn', 'training', 'teach', 'workshop', 'become artist'],
+    response: "🎓 *Makeup Classes:*\n\n• Self Makeup Course: ₹5,000\n• Basic Pro Course: ₹15,000\n• Advanced Bridal: ₹35,000\n• Master Course: ₹50,000\n\n⏰ Duration: 1 week - 2 months\n📜 Certificate provided\n💼 Placement assistance\n\n📞 Call for batch details!"
+  },
+  engagement: {
+    keywords: ['engagement', 'ring ceremony', 'roka', 'sagai', 'pre wedding', 'prewedding'],
+    response: "💍 *Engagement & Pre-Wedding:*\n\n• Engagement Makeup: ₹4,999 onwards\n• Roka Ceremony: ₹3,999 onwards\n• Pre-wedding Shoot: ₹5,999 onwards\n\n✨ Soft glam or bold - your choice!\n📸 Photo-ready finish\n👗 Draping included\n\nBook your special day look!"
+  },
+  thanks: {
+    keywords: ['thank', 'thanks', 'thankyou', 'thank you', 'dhanyawad', 'shukriya'],
+    response: "You're welcome! 😊\n\n✨ It was my pleasure helping you!\n\nNeed anything else? Feel free to ask!\n\n📞 Or call: +91-7880433001\n💬 WhatsApp for quick booking!"
+  },
+  bye: {
+    keywords: ['bye', 'goodbye', 'see you', 'tata', 'alvida'],
+    response: "Goodbye! 👋\n\n✨ Thank you for visiting VogueVerse!\n\n📞 Call: +91-7880433001\n📧 Email: Vogueversestudio@gmail.com\n\nWe'd love to make you look gorgeous! 💄\nSee you soon! 💕"
+  }
+};
+
+function getBotResponse(userMessage) {
+  const msg = userMessage.toLowerCase();
+  
+  for (const category in knowledgeBase) {
+    const { keywords, response } = knowledgeBase[category];
+    if (keywords.some(keyword => msg.includes(keyword))) {
+      return response;
+    }
+  }
+  
+  return "I'm not sure about that. 🤔\n\nYou can ask me about:\n• Services & Prices\n• Current Offers\n• Bridal Packages\n• Booking\n• Location & Contact\n\nOr WhatsApp us: +91-7880433001";
+}
+
+function addMessage(text, isUser = false) {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+  msgDiv.innerHTML = text.replace(/\n/g, '<br>').replace(/\*/g, '');
+  chatMessages.appendChild(msgDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function handleUserInput() {
+  const userText = chatInput.value.trim();
+  if (!userText) return;
+  
+  addMessage(userText, true);
+  chatInput.value = '';
+  
+  setTimeout(() => {
+    const botResponse = getBotResponse(userText);
+    addMessage(botResponse);
+  }, 500);
+}
+
+chatbotToggle.addEventListener('click', () => {
+  chatbotWindow.classList.toggle('active');
+});
+
+chatbotClose.addEventListener('click', () => {
+  chatbotWindow.classList.remove('active');
+});
+
+chatSend.addEventListener('click', handleUserInput);
+
+chatInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') handleUserInput();
+});
+
+document.querySelectorAll('.quick-reply').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const query = btn.dataset.query;
+    chatInput.value = query;
+    handleUserInput();
   });
 });
 </script>
