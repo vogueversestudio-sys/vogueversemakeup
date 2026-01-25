@@ -1,0 +1,21 @@
+# VogueVerse Makeup Studio - robots.txt
+# https://vogueversestudio-sys.github.io/vogueversemakeup
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://vogueversestudio-sys.github.io/vogueversemakeup/sitemap.xml
+
+# Allow all search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+# Crawl delay (optional - remove if you want faster indexing)
+# Crawl-delay: 10
