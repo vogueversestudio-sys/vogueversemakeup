@@ -957,7 +957,45 @@
     .portfolio-item:hover img {
       transform: scale(1.1);
     }
+  .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+      will-change: transform;
+      opacity: 0;
+      filter: blur(8px);
+    }
 
+    .portfolio-item.loaded img {
+      opacity: 1;
+      filter: blur(0);
+    }
+
+    .portfolio-item:hover img {
+      transform: scale(1.1);
+    }
+
+    /* Loading shimmer effect */
+    .portfolio-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      z-index: 1;
+      border-radius: 12px;
+    }
+
+    .portfolio-item.loaded::before {
+      display: none;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
     .portfolio-overlay {
       position: absolute;
       inset: 0;
@@ -2497,10 +2535,10 @@
   const popupClose = document.getElementById('popupClose');
   const popupBook = document.getElementById('popupBook');
 
-  // Show popup after 1.5 seconds on every visit
+  // Show popup after 2.5 seconds on every visit
   setTimeout(() => {
     welcomePopup.classList.add('active');
-  }, 1500);
+  }, 2500);
 
   // Close popup functions
   function closePopup() {
@@ -2751,6 +2789,22 @@ document.querySelectorAll('.quick-reply').forEach(btn => {
     chatInput.value = query;
     handleUserInput();
   });
+});
+</script>
+  <!-- High-quality Portfolio Image Loading -->
+<script>
+document.querySelectorAll('.portfolio-item img').forEach(img => {
+  const parent = img.closest('.portfolio-item');
+  
+  if (img.complete && img.naturalHeight !== 0) {
+    parent.classList.add('loaded');
+  } else {
+    img.addEventListener('load', () => parent.classList.add('loaded'));
+    img.addEventListener('error', () => {
+      parent.classList.add('loaded');
+      img.src = 'logo.jpeg';
+    });
+  }
 });
 </script>
 
